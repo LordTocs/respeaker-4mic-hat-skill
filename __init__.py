@@ -25,10 +25,10 @@ class ReSpeaker_4mic_hat(MycroftSkill):
         MycroftSkill.__init__(self)
 
     def initialize(self):
-        LOG.debug("initialising")
+        self.log.info("initialising")
 
-        power = LED(5)
-        power.on()
+        self.power = LED(5)
+        self.power.on()
 
         pixel_ring.set_brightness(10)
         pixel_ring.wakeup()
@@ -47,24 +47,25 @@ class ReSpeaker_4mic_hat(MycroftSkill):
         pixel_ring.off()
 
     def shutdown(self):
-        LOG.debug("shutdown")
+        self.log.info("shutdown")
         pixel_ring.off()
+        self.power.off()
         self.en.write(1)
 
     def handle_listener_wakeup(self, message):
-        LOG.debug("wakeup")
+        self.log.info("wakeup")
         pixel_ring.wakeup()
 
     def handle_listener_think(self, message):
-        LOG.debug("think")
+        self.log.info("think")
         pixel_ring.think()
 
     def handle_listener_speak(self, message):
-        LOG.debug("speak")
+        self.log.info("speak")
         pixel_ring.speak()
 
     def handle_listener_off(self, message):
-        LOG.debug("off")
+        self.log.info("off")
         pixel_ring.off()
 
     @intent_file_handler('ring.pixel.respeaker.intent')
